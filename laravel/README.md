@@ -73,4 +73,4 @@
 
 1. Make sure use correct `brand_id`, `api_key` & `endpoint`. Remember to terminate the `endpoint` with a forward slash `/`. <sup>[[ref]](https://stackoverflow.com/a/30874624)</sup>
 
-1. Follow [this](https://gate.chip-in.asia/apis/libraries/PHP), for more details.
+1. Refer [this](https://gate.chip-in.asia/apis/libraries/PHP) link, for more details.
