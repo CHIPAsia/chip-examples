@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,4 +17,53 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+
+Route::post('/callback/payment-success', function (Request $request) {
+    $signature = $request->header('X-Signature');
+    $content = $request->getContent();
+    $pub_key = env('CHIP_PUBLIC_KEY');
+
+    $is_verified = \Chip\ChipApi::verify($content, $signature, $pub_key);
+
+    if (!$is_verified) {
+        Log::warning("WEBHOOK: X-Signature Mismatch");
+        return response()->json([
+            'error' => 'X-Signature Mismatch'
+        ], 400);
+    }
+
+    // Upon successfull verification, update transaction status in database if necessary
+    // Update order & transaction status to 'purchase.paid'
+
+    Log::info("CALLBACK: X-Signature Ok!");
+    return response()->json([
+        'status' => 'CALLBACK: OK',
+    ]);
+});
+
+Route::post('/webhook/payment-success', function (Request $request) {
+    $signature = $request->header('X-Signature');
+    $content = $request->getContent();
+    $event = $request->input('event_type');
+    $pub_key = env('CHIP_PUBLIC_KEY_FOR_WEBHOOK');
+
+    $is_verified = \Chip\ChipApi::verify($content, $signature, $pub_key);
+
+    if (!$is_verified) {
+        Log::warning("WEBHOOK: X-Signature Mismatch");
+
+        return response()->json([
+            'error' => 'X-Signature Mismatch'
+        ], 400);
+    }
+
+    // Upon successfull verification, update transaction status in database if necessary
+    // Update order & transaction status to whatever the $event is
+
+    Log::info("WEBHOOK: X-Signature Ok!");
+    return response()->json([
+        'status' => 'WEBHOOK: OK',
+    ]);
 });
