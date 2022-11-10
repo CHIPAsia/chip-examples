@@ -28,6 +28,7 @@
     "require": {
         "php": "^8.0.2",
         "chip/chip-sdk-php": "^1.0",
+        "doctrine/dbal": "^3.5",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^9.19",
         "laravel/sanctum": "^3.0",

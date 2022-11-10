@@ -18,22 +18,28 @@
 1. Make sure to install all dependencies
 
    ```bash
-   composer dump-autoload   //remove autoload
+   composer dump-autoload    //remove autoload
 
-   composer install         //install dependencies
+   composer install          //install dependencies
 
-   yarn                     //install style dependencies
+   yarn                      //install style dependencies
    ```
 
 1. Next
 
    ```bash
-   ./vendor/bin/sail up     //start app
+   ./vendor/bin/sail up      //start app
    ```
 
 1. On new terminal, run
+
    ```bash
-   yarn dev                 //run style hotreload
+   yarn dev                  //run style hotreload
+   ```
+
+1. Run below to migrate DB
+   ```bash
+   ./vendor/bin/sail artisan migrate    //create DB tables
    ```
 
 ---

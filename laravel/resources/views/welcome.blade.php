@@ -65,29 +65,33 @@
                 <div class="flex flex-col space-y-4 p-4 sm:p-8">
                     <h3 class="text-2xl font-bold">Order List</h3>
                     <ul class="bg-base-200 dark:bg-base-300 border border-gray-300 dark:border-gray-500 rounded-lg divide-y divide-gray-300 dark:divide-gray-500">
+                        @if($orders->count() > 0)
+                        @foreach($orders as $order)
                         <li class="min-h-12 p-4 flex flex-col">
-                            <h3 class="text-md font-semibold">Txn ID</h3>
-                            <p class="text-sm">product_name</p>
-                            <p class="text-sm">product_price</p>
-                            <div class="badge badge-success">Paid</div>
+                            <h3 class="text-md font-semibold">Txn ID: {{$order->txn_id}}</h3>
+                            <p class="text-sm">{{$order->product_name}}</p>
+                            <p class="text-sm">RM {{$order->product_price/100}}</p>
+                            @if($order->status == 'purchase.paid' || $order->status == 'paid')
+                            <div class="badge badge-success">{{$order->status}}</div>
+                            @elseif($order->status !== 'purchase.payment_failure')
+                            <div class="badge badge-warning">{{$order->status}}</div>
+                            @else
+                            <div class="badge badge-error">{{$order->status}}</div>
+                            @endif
                         </li>
-                        <li class="min-h-12 p-4 flex flex-col">
-                            <h3 class="text-md font-semibold">Txn ID</h3>
-                            <p class="text-sm">product_name</p>
-                            <p class="text-sm">product_price</p>
-                            <div class="badge badge-error">Fail</div>
-                            <button class="btn btn-xs mt-5">Pay Again</button>
-                        </li>
-                        <li class="min-h-12 p-4 flex flex-col">
-                            <h3 class="text-md font-semibold">Txn ID</h3>
-                            <p class="text-sm">product_name</p>
-                            <p class="text-sm">product_price</p>
-                            <div class="badge badge-error">Fail</div>
-                            <button class="btn btn-xs mt-5">Pay Again</button>
-                        </li>
+                        @endforeach
+
+                        @if($orders->total() > 4)
                         <li class="min-h-12 p-2 text-center">
-                            <p class="text-subtitle">43 more...</p>
+                            <p class="text-subtitle">{{$orders->total() - 4}} more...</p>
                         </li>
+                        @endif
+
+                        @else
+                        <li class="min-h-12 p-4 text-center">
+                            <p class="text-sm">No data</p>
+                        </li>
+                        @endif
                     </ul>
                 </div>
             </div>

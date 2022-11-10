@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
@@ -36,6 +37,12 @@ Route::post('/callback/payment-success', function (Request $request) {
 
     // Upon successfull verification, update transaction status in database if necessary
     // Update order & transaction status to 'purchase.paid'
+    Log::info("CALLBACK: $request->id");
+    $order = Order::where('txn_id', $request->id)->first();
+    if ($order) {
+        $order->status = $request->status;
+        $order->save();
+    }
 
     Log::info("CALLBACK: X-Signature Ok!");
     return response()->json([
@@ -61,6 +68,12 @@ Route::post('/webhook/payment-success', function (Request $request) {
 
     // Upon successfull verification, update transaction status in database if necessary
     // Update order & transaction status to whatever the $event is
+    Log::info("WEBHOOK: $request->id");
+    $order = Order::where('txn_id', $request->id)->first();
+    if ($order) {
+        $order->status = $event;
+        $order->save();
+    }
 
     Log::info("WEBHOOK: X-Signature Ok!");
     return response()->json([
