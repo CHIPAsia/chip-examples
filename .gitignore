@@ -16,3 +16,14 @@ laravel/yarn-error.log
 laravel/.fleet
 laravel/.idea
 laravel/.vscode
+
+nestjs/node_modules
+nestjs/.idea
+nestjs/.awcache
+nestjs/.vscode
+nestjs/npm-debug.log
+nestjs/quick-start
+nestjs/test
+nestjs/coverage
+nestjs/.nyc_output
+nestjs/dist
