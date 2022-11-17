@@ -1,13 +1,144 @@
-<!DOCTYPE html>
 <html>
 
-<head>
-  <meta charset="utf-8">
-  <title>App</title>
-</head>
+  <head>
+    <meta charset="utf-8" />
+    <title>Nest Js &times; Chip In</title>
+    <link href="/output.css" rel="stylesheet" />
+  </head>
 
-<body>
-  {{ message }}
-</body>
+  <body
+    class="antialiased min-h-screen bg-base-200 preview"
+    style="background-size:5px 5px;"
+  >
+    <nav class="navbar bg-base-100 shadow-md">
+      <div class="navbar-center">
+        <a href="/" class="btn btn-ghost normal-case text-xl">Sample App</a>
+      </div>
+    </nav>
+    <div class="p-2 sm:p-4 space-y-4">
+      {{#if isSuccess}}
+        <div class="alert alert-success shadow-xl">
+          <div>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="stroke-current flex-shrink-0 h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+              ></path>
+            </svg>
+            <span>Your transaction has been confirmed!</span>
+          </div>
+        </div>
+      {{/if}}
+      {{#if isFail}}
+        <div class="alert alert-error shadow-xl">
+          <div>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="stroke-current flex-shrink-0 h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+              ></path>
+            </svg>
+            <span>Transaction failed successfully.</span>
+          </div>
+        </div>
+      {{/if}}
+      <div class="flex flex-col sm:flex-row gap-2 sm:gap-4">
+        <div class="flex-1 min-h-12 card bg-base-100 shadow-md">
+          <form
+            method="POST"
+            action="/payment"
+            class="flex flex-col space-y-4 p-4 sm:p-8"
+          >
+            <h3 class="text-2xl font-bold">Order Form</h3>
+            <div class="form-control w-full">
+              <label class="label">
+                <span class="label-text">Product Name</span>
+              </label>
+              <input
+                name="product_name"
+                value="{{form.title}}"
+                type="text"
+                placeholder="Your name"
+                class="input input-bordered w-full"
+              />
+            </div>
+            <div class="form-control w-full">
+              <label class="label">
+                <span class="label-text">Amount (RM)</span>
+              </label>
+              <input
+                name="product_price"
+                type="number"
+                value="{{form.price}}"
+                class="input input-bordered w-full"
+              />
+            </div>
+            <div class="form-control w-full">
+              <label class="label">
+                <span class="label-text">Your Email</span>
+              </label>
+              <input
+                name="client_email"
+                value="{{form.email}}"
+                type="email"
+                placeholder="Your email"
+                class="input input-bordered w-full"
+              />
+            </div>
+            <button class="btn" type="submit">Pay</button>
+          </form>
+        </div>
+        <div class="flex-1 min-h-12 card bg-base-100 shadow-md">
+          <div class="flex flex-col space-y-4 p-4 sm:p-8">
+            <h3 class="text-2xl font-bold">Order List</h3>
+            <ul
+              class="bg-base-200 dark:bg-base-300 border border-gray-300 dark:border-gray-500 rounded-lg divide-y divide-gray-300 dark:divide-gray-500"
+            >
+              {{#if orders.data.length}}
+                {{#each orders.data}}
+                  <li class="min-h-12 p-4 flex flex-col">
+                    <h3 class="text-md font-semibold">Txn ID:
+                      {{txn_id}}{{#unless txn_id}}N/A{{/unless}}</h3>
+                    <p class="text-sm">{{product_name}}</p>
+                    <p class="text-sm">RM {{product_price}}</p>
+                    {{#if isPaid}}
+                      <div class="badge badge-success">{{status}}</div>
+                    {{else if isFailPay}}
+                      <div class="badge badge-warning">{{status}}</div>
+                    {{else}}
+                      <div class="badge badge-error">{{status}}</div>
+                    {{/if}}
+                  </li>
+                {{/each}}
+              {{else}}
+                <li class="min-h-12 p-4 text-center">
+                  <p class="text-sm">No data</p>
+                </li>
+              {{/if}}
+              {{#if orders.metadata.moreThan4}}
+                <li class="min-h-12 p-2 text-center">
+                  <p class="text-subtitle">{{orders.metadata.total}} more...</p>
+                </li>
+              {{/if}}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
 
 </html>

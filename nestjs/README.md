@@ -14,7 +14,7 @@
 1. Make sure to install all dependencies
 
    ```bash
-   yarn                 //remove autoload
+   yarn                 //install deps
    ```
 
 1. Next
@@ -23,6 +23,19 @@
    yarn start:dev       //start app
    ```
 
+1. On new terminal, run
+   ```
+   npx tailwindcss -i ./src/input.css -o ./public/output.css --watch
+   ```
+
 ---
 
 ## NestJS - Chip Integration
+
+1. Run:
+
+   ```bash
+   yarn add https://gate.chip-in.asia/api_sdks/nodejs/
+   ```
+
+1. Refer [this](https://gate.chip-in.asia/apis/libraries/Node.js) link, for more details.
