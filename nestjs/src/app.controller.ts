@@ -13,7 +13,6 @@ import { PRODUCTS } from "../constants/index";
 import { Request, Response } from "express";
 import { OrderService } from "./order/service/order.service";
 import { default as Chip } from "Chip";
-import crypto, { sign } from "crypto";
 @Controller()
 export class AppController {
   constructor(private orderService: OrderService) {}
@@ -36,7 +35,12 @@ export class AppController {
       },
       orders: {
         data: orders.slice(0, 4).map((order) => {
-          return { ...order, product_price: order.product_price / 100 };
+          return {
+            ...order,
+            product_price: order.product_price / 100,
+            isPaid: ["purchase.paid", "paid"].includes(order.status),
+            isFailPay: ["purchase.payment_failure"].includes(order.status),
+          };
         }),
         metadata: { total: orders.length, moreThan4: orders.length > 4 },
       },
@@ -93,13 +97,38 @@ export class CallbackController {
   constructor(private orderService: OrderService) {}
 
   @Post("/api/callback/payment-success")
-  paymentSuccess(@Req() req: Request, @Res() res: Response) {
-    const signature = req.headers["x-signature"].toString();
-    const content = JSON.stringify(req.body);
-    const pub_key = process.env.CHIP_PUBLIC_KEY;
+  async paymentSuccess(@Req() req: Request, @Res() res: Response) {
+    let signature: string;
+    let decoded_base64: any;
+    let content: string;
+    let remote_pub_key: string;
 
     const apiInstance = new Chip.PaymentApi();
-    const is_verified = apiInstance.verify(content, signature, pub_key);
+    console.log("CALLBACK!");
+
+    try {
+      signature = req.get("X-Signature");
+      decoded_base64 = Buffer.from(signature, "base64");
+      content = JSON.stringify(req.body);
+    } catch (error) {
+      throw new HttpException(error.message, 400);
+    }
+
+    const fetcher = await fetch(
+      "https://gate.chip-in.asia/api/v1/public_key/",
+      {
+        headers: {
+          Authorization: `Bearer ${process.env.CHIP_API_KEY}`,
+        },
+      }
+    ).then((res) => res.json());
+    remote_pub_key = await fetcher.toString();
+
+    const is_verified = apiInstance.verify(
+      content,
+      decoded_base64,
+      remote_pub_key
+    );
 
     if (!is_verified) {
       console.log("CALLBACK: X-Signature Mismatch");
@@ -118,7 +147,7 @@ export class CallbackController {
 export class WebhookController {
   constructor(private orderService: OrderService) {}
 
-  @Post("/api/webhook/payment-success")
+  @Post("/api/webhook/payment")
   paymentSuccess(@Req() req: Request, @Res() res: Response) {
     const signature = req.headers["x-signature"].toString();
     const content = JSON.stringify(req.body);

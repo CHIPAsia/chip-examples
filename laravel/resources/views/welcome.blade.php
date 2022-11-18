@@ -74,9 +74,9 @@
                             @if($order->status == 'purchase.paid' || $order->status == 'paid')
                             <div class="badge badge-success">{{$order->status}}</div>
                             @elseif($order->status !== 'purchase.payment_failure')
-                            <div class="badge badge-warning">{{$order->status}}</div>
-                            @else
                             <div class="badge badge-error">{{$order->status}}</div>
+                            @else
+                            <div class="badge badge-warning">{{$order->status}}</div>
                             @endif
                         </li>
                         @endforeach

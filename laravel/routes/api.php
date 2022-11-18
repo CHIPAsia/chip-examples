@@ -50,7 +50,7 @@ Route::post('/callback/payment-success', function (Request $request) {
     ]);
 });
 
-Route::post('/webhook/payment-success', function (Request $request) {
+Route::post('/webhook/payment', function (Request $request) {
     $signature = $request->header('X-Signature');
     $content = $request->getContent();
     $event = $request->input('event_type');
