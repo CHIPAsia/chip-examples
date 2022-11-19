@@ -8,6 +8,7 @@ import {
   Req,
   Query,
   HttpException,
+  RawBodyRequest,
 } from "@nestjs/common";
 import { PRODUCTS } from "../constants/index";
 import { Request, Response } from "express";
@@ -97,19 +98,19 @@ export class CallbackController {
   constructor(private orderService: OrderService) {}
 
   @Post("/api/callback/payment-success")
-  async paymentSuccess(@Req() req: Request, @Res() res: Response) {
+  async paymentSuccess(
+    @Req() req: RawBodyRequest<Request>,
+    @Res() res: Response
+  ) {
     let signature: string;
-    let decoded_base64: any;
-    let content: string;
-    let remote_pub_key: string;
+    let content: any;
+    let pub_key: string;
 
     const apiInstance = new Chip.PaymentApi();
-    console.log("CALLBACK!");
 
     try {
       signature = req.get("X-Signature");
-      decoded_base64 = Buffer.from(signature, "base64");
-      content = JSON.stringify(req.body);
+      content = req.rawBody;
     } catch (error) {
       throw new HttpException(error.message, 400);
     }
@@ -122,12 +123,12 @@ export class CallbackController {
         },
       }
     ).then((res) => res.json());
-    remote_pub_key = await fetcher.toString();
+    pub_key = await fetcher.toString();
 
     const is_verified = apiInstance.verify(
       content,
-      decoded_base64,
-      remote_pub_key
+      Buffer.from(signature, "base64"),
+      pub_key
     );
 
     if (!is_verified) {
@@ -148,16 +149,27 @@ export class WebhookController {
   constructor(private orderService: OrderService) {}
 
   @Post("/api/webhook/payment")
-  paymentSuccess(@Req() req: Request, @Res() res: Response) {
-    const signature = req.headers["x-signature"].toString();
-    const content = JSON.stringify(req.body);
+  paymentSuccess(@Req() req: RawBodyRequest<Request>, @Res() res: Response) {
+    let signature: string;
+    let content: any;
     const pub_key = process.env.CHIP_PUBLIC_KEY_FOR_WEBHOOK;
-
     const apiInstance = new Chip.PaymentApi();
-    const is_verified = apiInstance.verify(content, signature, pub_key);
+
+    try {
+      signature = req.get("X-Signature");
+      content = req.rawBody;
+    } catch (error) {
+      throw new HttpException(error.message, 400);
+    }
+
+    const is_verified = apiInstance.verify(
+      content,
+      Buffer.from(signature, "base64"),
+      pub_key
+    );
 
     if (!is_verified) {
-      console.log("WEBHOOK: X-Signature Mismatch");
+      console.log("CALLBACK: X-Signature Mismatch");
       throw new HttpException("X-Signature Mismatch", 400);
     }
 

@@ -4,7 +4,9 @@ import { AppModule } from "./app.module";
 import { resolve } from "path";
 
 async function bootstrap() {
-  const app = await NestFactory.create<NestExpressApplication>(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule, {
+    rawBody: true,
+  });
 
   app.useStaticAssets(resolve("./public"));
   app.setBaseViewsDir(resolve("./views"));
