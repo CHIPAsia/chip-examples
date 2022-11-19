@@ -40,7 +40,9 @@ export class AppController {
             ...order,
             product_price: order.product_price / 100,
             isPaid: ["purchase.paid", "paid"].includes(order.status),
-            isFailPay: ["purchase.payment_failure"].includes(order.status),
+            isFailPay: ["purchase.payment_failure", "error"].includes(
+              order.status
+            ),
           };
         }),
         metadata: { total: orders.length, moreThan4: orders.length > 4 },
@@ -174,7 +176,7 @@ export class WebhookController {
     }
 
     console.log("WEBHOOK: X-Signature Ok!");
-    this.orderService.updateOrderStatus(req.body.id, req.body.status);
+    this.orderService.updateOrderStatus(req.body.id, req.body.event_type);
     res.status(HttpStatus.OK).json({
       message: "WEBHOOK OK!",
     });
