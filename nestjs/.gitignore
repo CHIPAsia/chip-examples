@@ -20,4 +20,4 @@ npm-debug.log
 # dist
 /dist
 /chip_in_db
-.env
+/.env
