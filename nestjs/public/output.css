@@ -2593,6 +2593,13 @@ html {
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
+.preview {
+  background-image: radial-gradient(
+    hsla(var(--bc) / 0.2) 0.5px,
+    hsla(var(--b2) / 1) 0.5px
+  );
+}
+
 @media (prefers-color-scheme: dark) {
   .dark\:divide-gray-500 > :not([hidden]) ~ :not([hidden]) {
     --tw-divide-opacity: 1;
