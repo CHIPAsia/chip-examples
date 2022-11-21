@@ -28,3 +28,4 @@ nestjs/coverage
 nestjs/.nyc_output
 nestjs/dist
 nestjs/chip_in_db
+nestjs/.env
