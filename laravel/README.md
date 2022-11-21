@@ -9,9 +9,17 @@
 
 ## Notes
 
-#### This sample app is built on top of `Docker`. Thus your are required to install it before running the app. Refer [here](https://laravel.com/docs/9.x/installation#getting-started-on-macos) for more details.
+### This sample app is built on top of `Docker`. Thus your are required to install it before running the app. Refer [here](https://laravel.com/docs/9.x/installation#getting-started-on-macos) for more details.
 
-#### Execute the following to run the app:
+### Make sure in your `.env` file containing the following key & value:
+
+- BASE_URL_FOR_WEBHOOK="[Your url for listening to event from payment webhook. i.e. https://your-domain.com/api/webhook/payment]"
+- CHIP_BRAND_ID="[Your Brand ID that you can obtain in the Developers section in your account]"
+- CHIP_API_KEY="[Your API key that you can obtain in the Developers section in your account]"
+- CHIP_ENDPOINT="https://gate.chip-in.asia/api/v1/"
+- CHIP_PUBLIC_KEY_FOR_WEBHOOK="[Public key for webhook. You can obtain the public key for `Webhook` authentication from `Webhook.public_key` of the corresponding `Webhook`]"
+
+### Execute the following to run the app:
 
 1. Make sure to install all dependencies
 
