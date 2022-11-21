@@ -2,6 +2,7 @@
 
 use App\Models\Order;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 
@@ -24,7 +25,23 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('/callback/payment-success', function (Request $request) {
     $signature = $request->header('X-Signature');
     $content = $request->getContent();
-    $pub_key = env('CHIP_PUBLIC_KEY');
+
+    // get public key
+    $response = Http::withHeaders([
+        'Authorization' => "Bearer " . env('CHIP_API_KEY')
+    ])->get("https://gate.chip-in.asia/api/v1/public_key/");
+    $response_body = strval($response->body());
+
+    // need to stich pub_key manually else will get error 
+    // => openssl_verify(): Supplied key param cannot be coerced into a public key
+    $response_arr = explode('\n', $response_body, -1);
+    array_shift($response_arr);
+    array_pop($response_arr);
+    $response_arr_flat = "";
+    foreach ($response_arr as $string) {
+        $response_arr_flat .= $string . "\n";
+    }
+    $pub_key = "-----BEGIN PUBLIC KEY-----\n" . $response_arr_flat . "-----END PUBLIC KEY-----\n";
 
     $is_verified = \Chip\ChipApi::verify($content, $signature, $pub_key);
 
