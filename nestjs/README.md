@@ -1,4 +1,4 @@
-<p align="center"><a href="http://nestjs.com" target="_blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Laravel Logo"></a></p>
+<p align="center"><a href="http://nestjs.com" target="_blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="NestJS Logo"></a></p>
 
 <p align="center">
 <img src="https://img.shields.io/badge/nest-v9.0.1-blue"/>
@@ -19,22 +19,25 @@
 
 ### Execute the following to run the app:
 
-1. Make sure to install all dependencies
+1. Make sure to install all dependencies:
 
    ```bash
-   yarn                 //install deps
+   yarn
    ```
 
-1. Next
+1. Next, run the following to start the app:
 
    ```bash
-   yarn start:dev       //start app
+   yarn start:dev
    ```
 
-1. On new terminal, run
+   The app will be running at http://localhost:3000.
+
+1. On new terminal, run:
    ```
    npx tailwindcss -i ./src/input.css -o ./public/output.css --watch
    ```
+   This will allow tailwindcss to listen to any changes on html classes & styles being made and update the `output.css` file accordingly.
 
 ---
 

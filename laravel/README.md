@@ -21,7 +21,7 @@
 
 ### Execute the following to run the app:
 
-1. Make sure to install all dependencies
+1. Make sure to install all dependencies:
 
    ```bash
    composer dump-autoload    //remove autoload
@@ -31,21 +31,25 @@
    yarn                      //install style dependencies
    ```
 
-1. Next
+1. Next, run the following to start the app:
 
    ```bash
-   ./vendor/bin/sail up      //start app
+   ./vendor/bin/sail up
    ```
 
-1. On new terminal, run
+   The app will be running at http://localhost:80.
+
+1. On new terminal, run:
 
    ```bash
-   yarn dev                  //run style hotreload
+   yarn dev
    ```
 
-1. Run below to migrate DB
+   This will run asset bundler ([Vite](https://laravel.com/docs/9.x/vite)).
+
+1. Run below to migrate DB:
    ```bash
-   ./vendor/bin/sail artisan migrate    //create DB tables
+   ./vendor/bin/sail artisan migrate
    ```
 
 ---
@@ -75,7 +79,7 @@
    ],
    ...
    ```
-1. Run:
+1. Run the following to install the library & it's dependency:
 
    ```bash
    composer require chip/chip-sdk-php
@@ -83,6 +87,6 @@
    composer require netresearch/jsonmapper
    ```
 
-1. Make sure use correct `brand_id`, `api_key` & `endpoint`. Remember to terminate the `endpoint` with a forward slash `/`. <sup>[[ref]](https://stackoverflow.com/a/30874624)</sup>
+1. Make sure use correct `brand_id`, `api_key` & `endpoint`. Remember to terminate the `endpoint` with a forward slash `/`. [Reference](https://stackoverflow.com/a/30874624)
 
 1. Refer [this](https://gate.chip-in.asia/apis/libraries/PHP) link, for more details.
