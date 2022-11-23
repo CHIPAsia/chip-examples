@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Ruby on Rails &times; Chip In</title>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@2.41.0/dist/full.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
+
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body class="antialiased min-h-screen bg-base-200 preview" style="background-size:5px 5px;">
+    <nav class="navbar bg-base-100 shadow-md">
+      <div class="navbar-center">
+        <a href="/" class="btn btn-ghost normal-case text-xl">Sample App</a>
+      </div>
+    </nav>
+    <%= yield %>
+  </body>
+</html>

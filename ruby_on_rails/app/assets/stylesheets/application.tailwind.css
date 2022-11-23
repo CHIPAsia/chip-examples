@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+
+@layer components {
+  .btn-primary {
+    @apply py-2 px-4 bg-blue-200;
+  }
+}
+
+*/
+.preview {
+  background-image: radial-gradient(
+    hsla(var(--bc) / 0.2) 0.5px,
+    hsla(var(--b2) / 1) 0.5px
+  );
+}

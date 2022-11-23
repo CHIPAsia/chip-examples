@@ -31,7 +31,7 @@ export class AppController {
       isFail: query["status"] === "fail",
       form: {
         title: product.title,
-        email: "gegurl@gmail.com",
+        email: "no-reply@chip-in.asia",
         price: product.price,
       },
       orders: {
