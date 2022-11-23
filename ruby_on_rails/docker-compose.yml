@@ -15,7 +15,7 @@ services:
     depends_on:
       - db
     environment:
-      BASE_URL_FOR_WEBHOOK: "https://3d92-61-6-106-26.ngrok.io"
+      BASE_URL_FOR_WEBHOOK: "https://b1f9-2001-f40-90f-1b7b-c9b8-9464-fce5-99e1.ngrok.io"
       CHIP_BRAND_ID: "5d158ff2-257d-47ad-8d8c-896c25c4974c"
       CHIP_API_KEY: "X0bevpelKzwXX5cyu8qRhzlZ_hXP_cze6CJQ_GnP667hrFMFqYTmlPGIfvxjBXZZdpglP1kDiqcVYMOLPCygWA=="
       CHIP_ENDPOINT: "https://gate.chip-in.asia/api/v1"

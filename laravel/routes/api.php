@@ -46,7 +46,7 @@ Route::post('/callback/payment-success', function (Request $request) {
     $is_verified = \Chip\ChipApi::verify($content, $signature, $pub_key);
 
     if (!$is_verified) {
-        Log::warning("WEBHOOK: X-Signature Mismatch");
+        Log::warning("CALLBACK: X-Signature Mismatch");
         return response()->json([
             'error' => 'X-Signature Mismatch'
         ], 400);

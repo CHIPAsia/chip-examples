@@ -1,92 +1,109 @@
 <div class="p-2 sm:p-4 space-y-4">
-  <% if @status == "success" %>  
-  <div class="alert alert-success shadow-xl">
-    <div>
-      <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none"
-        viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-          d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-      </svg>
-      <span>Your transaction has been confirmed!</span>
-    </div>
-  </div>
-  <% end %>
-  <% if @status == "fail" %>
-  <div class="alert alert-error shadow-xl">
-    <div>
-      <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none"
-        viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-          d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-      </svg>
-      <span>Transaction failed successfully.</span>
-    </div>
-  </div>
-  <% end %>
-  <div class="flex flex-col sm:flex-row gap-2 sm:gap-4">
-    <div class="flex-1 min-h-12 card bg-base-100 shadow-md">
-      <form method="POST" action="/payment" class="flex flex-col space-y-4 p-4 sm:p-8">
-        <h3 class="text-2xl font-bold">Order Form</h3>
-        <div class="form-control w-full">
-          <label class="label">
-            <span class="label-text">Product Name</span>
-          </label>
-          <input name="product_name" value="<%= @form[:title] %>" type="text" placeholder="Product name"
-            class="input input-bordered w-full rounded-lg" />
-        </div>
-        <div class="form-control w-full">
-          <label class="label">
-            <span class="label-text">Amount (RM)</span>
-          </label>
-          <input name="product_price" type="number" value="<%= @form[:price] %>" class="input input-bordered w-full rounded-lg" />
-        </div>
-        <div class="form-control w-full">
-          <label class="label">
-            <span class="label-text">Your Email</span>
-          </label>
-          <input name="customer_email" value="<%= @form[:email] %>" type="email" placeholder="Your email"
-            class="input input-bordered w-full rounded-lg" />
-        </div>
-        <button class="btn text-gray-800 hover:text-white dark:text-white dark:bg-gray-700 dark:border-gray-700" type="submit">Pay</button>
-      </form>
-    </div>
-    <div class="flex-1 min-h-12 card bg-base-100 shadow-md">
-      <div class="flex flex-col space-y-4 p-4 sm:p-8">
-        <h3 class="text-2xl font-bold">Order List</h3>
-        <ul
-          class="bg-base-200 dark:bg-base-300 border border-gray-300 dark:border-gray-500 rounded-lg divide-y divide-gray-300 dark:divide-gray-500">
-          <% if @orders.length() > 0 %>
-          
-          <% @orders.each do |order| %>
-          <li class="min-h-12 p-4 flex flex-col">
-            <h3 class="text-md font-semibold">Txn ID:
-              <%= txn_id unless "N/A" %>
-            </h3>
-            <p class="text-sm"><%= order.product_name %></p>
-            <p class="text-sm">RM <%= order.product_price %></p>
-            <% if ["purchase.paid", "paid"].include? order.status %>
-            <div class="badge badge-success"><%= order.status %></div>
-            <% elsif ["purchase.payment_failure", "error"].include? order.status %>
-            <div class="badge badge-error"><%= order.status %></div>
-            <% else %>
-            <div class="badge badge-warning"><%= order.status %></div>
-            <% end %>
-          </li>
-          <% end %>
-
-          <% else %>
-          <li class="min-h-12 p-4 text-center">
-            <p class="text-sm">No data</p>
-          </li>
-          <% end %>
-
-          <% if @count > 4 %>
-          <li class="min-h-12 p-2 text-center">
-            <p class="text-subtitle"><%= @count %> more...</p>
-          </li>
-          <% end %>
-        </ul>
+  <% if @status=="success" %>
+    <div class="alert alert-success shadow-xl">
+      <div>
+        <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none"
+          viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        </svg>
+        <span>Your transaction has been confirmed!</span>
       </div>
     </div>
-  </div>
+    <% end %>
+      <% if @status=="fail" %>
+        <div class="alert alert-error shadow-xl">
+          <div>
+            <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none"
+              viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <span>Transaction failed successfully.</span>
+          </div>
+        </div>
+        <% end %>
+          <div class="flex flex-col sm:flex-row gap-2 sm:gap-4">
+            <div class="flex-1 min-h-12 card bg-base-100 shadow-md">
+              <%= form_with url: "/payment" , class: "flex flex-col space-y-4 p-4 sm:p-8" , method: :post do |form| %>
+                <h3 class="text-2xl font-bold">Order Form</h3>
+                <div class="form-control w-full">
+                  <label class="label">
+                    <span class="label-text">Product Name</span>
+                  </label>
+                  <input name="product_name" value="<%= @form[:title] %>" type="text" placeholder="Product name"
+                    class="input input-bordered w-full rounded-lg" />
+                </div>
+                <div class="form-control w-full">
+                  <label class="label">
+                    <span class="label-text">Amount (RM)</span>
+                  </label>
+                  <input name="product_price" type="number" value="<%= @form[:price] %>"
+                    class="input input-bordered w-full rounded-lg" />
+                </div>
+                <div class="form-control w-full">
+                  <label class="label">
+                    <span class="label-text">Your Email</span>
+                  </label>
+                  <input name="customer_email" value="<%= @form[:email] %>" type="email" placeholder="Your email"
+                    class="input input-bordered w-full rounded-lg" />
+                </div>
+                <%= form.submit "Pay" , data: { turbo: false },
+                  class: "btn text-gray-800 hover:text-white dark:text-white dark:bg-gray-700 dark:border-gray-700" %>
+                  <% end %>
+            </div>
+            <div class="flex-1 min-h-12 card bg-base-100 shadow-md">
+              <div class="flex flex-col space-y-4 p-4 sm:p-8">
+                <h3 class="text-2xl font-bold">Order List</h3>
+                <ul
+                  class="bg-base-200 dark:bg-base-300 border border-gray-300 dark:border-gray-500 rounded-lg divide-y divide-gray-300 dark:divide-gray-500">
+                  <% if @orders.length()> 0 %>
+
+                    <% @orders.each do |order| %>
+                      <li class="min-h-12 p-4 flex flex-col">
+                        <h3 class="text-md font-semibold">Txn ID:
+                          <% if order.txn_id !=nil %>
+                            <%= order.txn_id %>
+                              <% else %>
+                                <%= "N/A" %>
+                                  <% end %>
+                        </h3>
+                        <p class="text-sm">
+                          <%= order.product_name %>
+                        </p>
+                        <p class="text-sm">RM <%= order.product_price %>
+                        </p>
+                        <% if ["purchase.paid", "paid" ].include? order.status %>
+                          <div class="badge badge-success">
+                            <%= order.status %>
+                          </div>
+                          <% elsif ["purchase.payment_failure", "error" ].include? order.status %>
+                            <div class="badge badge-error">
+                              <%= order.status %>
+                            </div>
+                            <% else %>
+                              <div class="badge badge-warning">
+                                <%= order.status %>
+                              </div>
+                              <% end %>
+                      </li>
+                      <% end %>
+
+                        <% else %>
+                          <li class="min-h-12 p-4 text-center">
+                            <p class="text-sm">No data</p>
+                          </li>
+                          <% end %>
+
+                            <% if @count> 4 %>
+                              <li class="min-h-12 p-2 text-center">
+                                <p class="text-subtitle">
+                                  <%= @count %> more...
+                                </p>
+                              </li>
+                              <% end %>
+                </ul>
+              </div>
+            </div>
+          </div>
 </div>

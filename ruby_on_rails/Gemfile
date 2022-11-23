@@ -75,3 +75,9 @@ gem "tailwindcss-rails", "~> 2.0"
 
 # Use for pagination
 gem 'kaminari'
+
+# Use for http client
+gem 'faraday'
+
+# Use for CORS
+gem 'rack-cors'
