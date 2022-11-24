@@ -1,4 +1,4 @@
-<p align="center"><a href="https://rubyonrails.org" target="_blank"><div style="background: #D30001;border-radius: 100%; width: 120px; height: 120px; display: flex; justify-content: center; margin: 0px auto;"><img style="filter: brightness(0) invert(1); margin-top: 2.5em;" src="https://rubyonrails.org/assets/images/logo.svg" width="100"alt="Ruby on Rails Logo"></div></a></p>
+<p align="center"><a href="https://rubyonrails.org" target="_blank" style="background: #D30001;border-radius: 100%; width: 120px; height: 120px; display: flex; justify-content: center; margin: 0px auto;"><img style="filter: brightness(0) invert(1); margin-bottom: 0.5em;" src="https://rubyonrails.org/assets/images/logo.svg" width="100"alt="Ruby on Rails Logo"></a></p>
 
 <p align="center">
 <img src="https://img.shields.io/badge/rails-v7.0.4-blue"/>
