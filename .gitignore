@@ -45,3 +45,4 @@ ruby_on_rails/tmp/storage/*
 !ruby_on_rails/tmp/storage/.keep
 ruby_on_rails/public/assets
 ruby_on_rails/config/master.key
+ruby_on_rails/.env

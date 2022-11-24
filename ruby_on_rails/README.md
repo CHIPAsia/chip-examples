@@ -9,7 +9,7 @@
 
 ## Notes
 
-### Make sure in your `environment` variable in `docker-compose.yml` file containing the following key & correct value:
+### Make sure in your `.env` file containing the following key & value:
 
 - BASE_URL_FOR_WEBHOOK="[Your url for listening to event from payment webhook. i.e. https://your-domain.com/api/webhook/payment]"
 - CHIP_BRAND_ID="[Your Brand ID that you can obtain in the Developers section in your account]"

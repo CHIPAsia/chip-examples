@@ -14,9 +14,4 @@ services:
       - "3000:3000"
     depends_on:
       - db
-    environment:
-      BASE_URL_FOR_WEBHOOK: "https://b1f9-2001-f40-90f-1b7b-c9b8-9464-fce5-99e1.ngrok.io"
-      CHIP_BRAND_ID: "5d158ff2-257d-47ad-8d8c-896c25c4974c"
-      CHIP_API_KEY: "X0bevpelKzwXX5cyu8qRhzlZ_hXP_cze6CJQ_GnP667hrFMFqYTmlPGIfvxjBXZZdpglP1kDiqcVYMOLPCygWA=="
-      CHIP_ENDPOINT: "https://gate.chip-in.asia/api/v1"
-      CHIP_PUBLIC_KEY_FOR_WEBHOOK: "-----BEGIN PUBLIC KEY-----\nMIIBojANBgkqhkiG9w0BAQEFAAOCAY8AMIIBigKCAYEAtdGBM0hSY9Lqn+pjpKJTcizw5N3ZubLThGLa9YD61Y/z12mhyh7oSajHEg/gnIReGw43pndV6f7foqIRZ68hIClqv5oa0qOiAuXEx02ybsZdFm1VC6IMGf+kiCep43KLIhqk3yTrgpimqa9335oggRw7tE4Ij4w18BFzm7f/wZX8eJvR/AcWSOylBTHyObgBqFkRKF+JyQgWafJyAr+TIQkYKWMPwlqzqRSkvtfNjvaXQYAVPi4sjkT1iBNBCSIARI8zYwbKzii0JXZu5wVVO4R0kUgyiYI+dNZLKluUIfSAqZDWBFJ4o+Rjl4P2VVAG93/KEvCXtTzc/NCLjBFBPQVKd4DkKjbWYI2sWlvIlVVtw6C/Sv4UHaPx46Gz3ZPHllhRcBDh9h3QCeR/cM94z8VhOZpHwV1Ky4G29XGmlg8k+TZXRCbgeokZdPHvD+C3KFzEvsR+WdKSfCGdwu6K9QbP761kuRmLYdPMW7iMZOMyZg5MurShhkwW3Qdrx5qRAgMBAAE=\n-----END PUBLIC KEY-----\n"
+    env_file: .env
