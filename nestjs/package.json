@@ -24,7 +24,7 @@
     "@nestjs/core": "9.0.1",
     "@nestjs/platform-express": "9.0.1",
     "@nestjs/typeorm": "^9.0.1",
-    "Chip": "https://gate.chip-in.asia/api_sdks/nodejs/",
+    "Chip": "github:CHIPAsia/chip-nodejs-sdk#v1.0.0",
     "daisyui": "^2.40.1",
     "express-session": "^1.17.3",
     "hbs": "4.2.0",

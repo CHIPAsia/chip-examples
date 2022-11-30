@@ -22,13 +22,13 @@ This section should list any major frameworks that uses above libraries to boots
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- SOURCE: https://github.com/Ileriayo/markdown-badges -->
 [PHP-logo]: https://img.shields.io/badge/php-%23777BB4.svg?style=for-the-badge&logo=php&logoColor=white
-[CHIP-php-url]: https://gate.chip-in.asia/api_sdks/php/
+[CHIP-php-url]: https://github.com/CHIPAsia/chip-php-sdk
 [NodeJS-logo]: https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white
-[CHIP-nodejs-url]: https://gate.chip-in.asia/api_sdks/nodejs/
-[Java-logo]: https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=java&logoColor=white
-[CHIP-java-url]: https://gate.chip-in.asia/api_sdks/java/
+[CHIP-nodejs-url]: https://github.com/CHIPAsia/chip-nodejs-sdk
+[Java-logo]: https://img.shields.io/badge/Java-%23ED8B00.svg?style=for-the-badge&logo=java&logoColor=white
+[CHIP-java-url]: https://github.com/CHIPAsia/chip-java-sdk
 [C#-logo]: https://img.shields.io/badge/c%23-%23239120.svg?style=for-the-badge&logo=c-sharp&logoColor=white
-[CHIP-c#-url]: https://gate.chip-in.asia/api_sdks/csharp/
+[CHIP-c#-url]: https://github.com/CHIPAsia/chip-csharp-sdk
 
 [NestJS-logo]: https://img.shields.io/badge/nestjs-%23E0234E.svg?style=for-the-badge&logo=nestjs&logoColor=white
 [CHIP-nestjs-url]: https://github.com/CHIPAsia/chip-examples/tree/main/nestjs

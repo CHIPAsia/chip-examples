@@ -59,24 +59,25 @@
 1. Add the following into `composer.json`, after `license` line:
    ```php
    ...
-   "repositories": [
-     {
-       "type": "package",
-       "package": {
-         "name": "chip/chip-sdk-php",
-         "version": "1.0",
-         "dist": {
-           "url": "https://gate.chip-in.asia/api_sdks/php/",
-           "type": "zip"
-         },
-         "autoload": {
-           "classmap": [
-             "lib/"
-           ]
-         }
-       }
-     }
-   ],
+    "repositories": [
+      {
+          "type": "package",
+          "package": {
+              "name": "chip/chip-sdk-php",
+              "version": "v1.0.0",
+              "source": {
+                  "url": "git@github.com:CHIPAsia/chip-php-sdk.git",
+                  "type": "git",
+                  "reference": "v1.0.0"
+              },
+              "autoload": {
+                  "classmap": [
+                      "lib/"
+                  ]
+              }
+          }
+      }
+    ],
    ...
    ```
 1. Run the following to install the library & it's dependency:

@@ -44,9 +44,15 @@
 ## NestJS - Chip Integration
 
 1. Run:
-
+  
+  **yarn**
    ```bash
-   yarn add https://gate.chip-in.asia/api_sdks/nodejs/
+   yarn add git+ssh://git@github.com/CHIPAsia/chip-nodejs-sdk.git#v1.0.0
+   ```
+
+  **npm**
+   ```bash
+   npm install git+ssh://git@github.com/CHIPAsia/chip-nodejs-sdk.git#v1.0.0
    ```
 
 1. Make sure use `rawBody` to do verification on `X-Signature`. NestJS doesn't enable this option by default. Refer [here](https://docs.nestjs.com/faq/raw-body) for more details.
