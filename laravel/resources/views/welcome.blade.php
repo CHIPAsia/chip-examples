@@ -35,22 +35,43 @@
             </div>
         </div>
         @endif
+
+        @if ($errors->any())
+        <div class="alert alert-error shadow-xl">
+            <div class="px-6">
+                <ul class="list-disc">
+                    @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        </div>
+        @endif
+
         <div class="flex flex-col sm:flex-row gap-2 sm:gap-4">
             <div class="flex-1 min-h-12 card bg-base-100 shadow-md">
                 <form method="POST" action="/payment" class="flex flex-col space-y-4 p-4 sm:p-8">
-                    <h3 class="text-2xl font-bold">Order Form</h3>
+                    <div class="flex flex-row justify-between items-center">
+                        <h3 class="text-2xl font-bold">Order Form</h3>
+                        <div class="form-control">
+                            <label class="label cursor-pointer gap-4">
+                                <span class="label-text">Pay using Direct Post CC:</span>
+                                <input type="checkbox" value="true" name="is_direct_post" class="toggle" id="is_direct_post" />
+                            </label>
+                        </div>
+                    </div>
                     @csrf
                     <div class="form-control w-full">
                         <label class="label">
                             <span class="label-text">Product Name</span>
                         </label>
-                        <input name="product_name" value="{{$product->title}}" type="text" placeholder="Your name" class="input input-bordered w-full" />
+                        <input name="product_name" value="{{$product->title}}" type="text" placeholder="Your name" class="input input-bordered w-full @error('product_name') input-error @enderror" />
                     </div>
                     <div class="form-control w-full">
                         <label class="label">
                             <span class="label-text">Amount (RM)</span>
                         </label>
-                        <input name="product_price" type="number" value="{{$product->price}}" class="input input-bordered w-full" />
+                        <input name="product_price" type="number" value="{{$product->price}}" class="input input-bordered w-full @error('product_price') input-error @enderror" />
                     </div>
                     <div class="form-control w-full">
                         <label class="label">
@@ -157,5 +178,17 @@
         </div>
     </div>
 </body>
+
+<script>
+    let isDirectPost = false
+    document.getElementById('is_direct_post').addEventListener('change', function(evt) {
+        if (isDirectPost) {
+            document.getElementById('credit_card_form').classList.add('hidden')
+        } else {
+            document.getElementById('credit_card_form').classList.remove('hidden')
+        }
+        isDirectPost = !isDirectPost
+    })
+</script>
 
 </html>
