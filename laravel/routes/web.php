@@ -17,3 +17,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [Controller::class, 'index']);
 
 Route::post('/payment', [Controller::class, 'create']);
+
+Route::get('/cc_form', function () {
+  return view('credit_card_form');
+});
