@@ -28,6 +28,8 @@ class Controller extends BaseController
     public function create(Request $request)
     {
         $inputs = $request->validate([
+            'is_direct_post' => '',
+            'remember_card' => '',
             'product_name' => 'required',
             'product_price' => 'required',
             'client_email' => 'required|email',
@@ -37,7 +39,10 @@ class Controller extends BaseController
             'credit_card_cvc' => 'required_if:is_direct_post,true|max:4',
         ]);
 
-        dd($inputs);
+        $is_direct_post = null;
+        if (array_key_exists('is_direct_post', $inputs)) {
+            $is_direct_post = $inputs['is_direct_post'];
+        }
 
         $price = (float) $inputs['product_price'] * 100;
         $price_in_cent = (int) $price;
@@ -77,10 +82,49 @@ class Controller extends BaseController
         $order->txn_id = end($exploded_url);
         $order->save();
 
+        if ($is_direct_post && $result->direct_post_url) {
+            $this->handleDirectPost($result, $inputs);
+        }
         if ($result && $result->checkout_url) {
             // redirect to payment gateway
             return Redirect::to($result->checkout_url);
             exit;
         }
+    }
+
+    public function handleDirectPost(Purchase $result, $inputs)
+    {
+        $credit_card_no = $inputs['credit_card_no'];
+        $credit_card_month = $inputs['credit_card_month'];
+        $credit_card_year = $inputs['credit_card_year'];
+        $credit_card_cvc = $inputs['credit_card_cvc'];
+
+        $arr = [];
+        if (array_key_exists('remember_card', $inputs)) {
+            $remember_card = $inputs['remember_card'];
+            $arr = ['remember_card' => $remember_card];
+        }
+
+        $client = new \GuzzleHttp\Client();
+
+        $response = $client->request('POST', $result->direct_post_url, [
+            'headers' => [
+                'Authorization' => 'Bearer ' . env('CHIP_API_KEY')
+            ],
+            'json' => array_merge([
+                'cardholder_name' => 'ANY NAME',
+                'card_number' => $credit_card_no,
+                'expires' => $credit_card_month . '/' . $credit_card_year,
+                'cvc' => $credit_card_cvc,
+            ], $arr )
+        ]);
+
+        $body = (string)$response->getBody()->getContents();
+
+        $json = json_decode($body);
+        
+        dd($response, $json); // getting null
+
+        // submit credit card to direct post url
     }
 }

@@ -80,7 +80,7 @@
                         <input name="client_email" value="{{fake('ms_MY')->unique()->safeEmail()}}" type="email" placeholder="Your email" class="input input-bordered w-full @error('client_email') input-error @enderror" />
                     </div>
 
-                    <div class="@error('product_name')  @else hidden @enderror" id="credit_card_form">
+                    <div id="credit_card_form">
                         <div class="divider">
                             <h3 class="text-2xl font-bold">Credit Card</h3>
                         </div>
@@ -134,7 +134,7 @@
                             </label>
                             <label class="label cursor-pointer">
                                 <span class="label-text">Remember my card:</span>
-                                <input type="checkbox" value="on" name="remember_card" class="toggle" id="is_direct_post" />
+                                <input type="checkbox" value="on" name="remember_card" class="toggle" />
                             </label>
                         </div>
                     </div>
@@ -180,15 +180,22 @@
 </body>
 
 <script>
-    let isDirectPost = false
+    let isDirectPost = true
+    document.getElementById('is_direct_post').checked = isDirectPost
+    handleCCForm()
+
     document.getElementById('is_direct_post').addEventListener('change', function(evt) {
-        if (isDirectPost) {
+        isDirectPost = !isDirectPost
+        handleCCForm()
+    })
+
+    function handleCCForm() {
+        if (!isDirectPost) {
             document.getElementById('credit_card_form').classList.add('hidden')
         } else {
             document.getElementById('credit_card_form').classList.remove('hidden')
         }
-        isDirectPost = !isDirectPost
-    })
+    }
 </script>
 
 </html>
