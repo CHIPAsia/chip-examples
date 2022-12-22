@@ -21,3 +21,5 @@ Route::post('/payment', [Controller::class, 'create']);
 Route::get('/cc_form', function () {
   return view('credit_card_form');
 });
+
+Route::post('/cc_form', [Controller::class, 'cc_post']);
