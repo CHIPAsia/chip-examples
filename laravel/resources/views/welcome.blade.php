@@ -56,7 +56,7 @@
                         <div class="form-control">
                             <label class="label cursor-pointer gap-4">
                                 <span class="label-text">Pay using Direct Post CC:</span>
-                                <input type="checkbox" value="true" name="is_direct_post" class="toggle" id="is_direct_post" />
+                                <input type="checkbox" value="true" checked name="is_direct_post" class="toggle" id="is_direct_post" />
                             </label>
                         </div>
                     </div>
@@ -78,65 +78,6 @@
                             <span class="label-text">Your Email</span>
                         </label>
                         <input name="client_email" value="{{fake('ms_MY')->unique()->safeEmail()}}" type="email" placeholder="Your email" class="input input-bordered w-full @error('client_email') input-error @enderror" />
-                    </div>
-
-                    <div id="credit_card_form">
-                        <div class="divider">
-                            <h3 class="text-2xl font-bold">Credit Card</h3>
-                        </div>
-
-                        <div class="form-control w-full">
-                            <label class="label">
-                                <span class="label-text"></span>
-                            </label>
-                            <input name="credit_card_no" value="4100000000000100" type="text" placeholder="Enter your credit card number. i.e: 1212232334344545" class="input input-bordered w-full @error('credit_card_no') input-error @enderror" />
-                        </div>
-                        <div class="form-control w-full">
-                            <label class="label">
-                                <span class="label-text"></span>
-                            </label>
-                            <div class="flex flex-row gap-4">
-                                <select name="credit_card_month" class="select select-bordered flex-grow">
-                                    <option disabled selected>Month</option>
-                                    <option value="01">Jan</option>
-                                    <option value="02">Feb</option>
-                                    <option value="03">Mar</option>
-                                    <option value="04">Apr</option>
-                                    <option value="05">May</option>
-                                    <option value="06">Jun</option>
-                                    <option value="07">Jul</option>
-                                    <option value="08" selected>Aug</option>
-                                    <option value="09">Sep</option>
-                                    <option value="10">Oct</option>
-                                    <option value="11">Nov</option>
-                                    <option value="12">Dec</option>
-                                </select>
-                                <select name="credit_card_year" class="select select-bordered flex-grow">
-                                    <option disabled selected>Year</option>
-                                    <option value="23">2023</option>
-                                    <option value="24">2024</option>
-                                    <option value="25" selected>2025</option>
-                                    <option value="26">2026</option>
-                                    <option value="27">2027</option>
-                                    <option value="28">2028</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-control w-full">
-                            <label class="label">
-                                <span class="label-text"></span>
-                            </label>
-                            <input name="credit_card_cvc" value="123" type="text" placeholder="Enter your cvc." class="input input-bordered w-full @error('credit_card_cvc') input-error @enderror" />
-                        </div>
-                        <div class="form-control">
-                            <label class="label">
-                                <span class="label-text"></span>
-                            </label>
-                            <label class="label cursor-pointer">
-                                <span class="label-text">Remember my card:</span>
-                                <input type="checkbox" value="on" name="remember_card" class="toggle" />
-                            </label>
-                        </div>
                     </div>
                     <button class="btn" type="submit">Pay</button>
                 </form>
@@ -178,24 +119,5 @@
         </div>
     </div>
 </body>
-
-<script>
-    let isDirectPost = true
-    document.getElementById('is_direct_post').checked = isDirectPost
-    handleCCForm()
-
-    document.getElementById('is_direct_post').addEventListener('change', function(evt) {
-        isDirectPost = !isDirectPost
-        handleCCForm()
-    })
-
-    function handleCCForm() {
-        if (!isDirectPost) {
-            document.getElementById('credit_card_form').classList.add('hidden')
-        } else {
-            document.getElementById('credit_card_form').classList.remove('hidden')
-        }
-    }
-</script>
 
 </html>
