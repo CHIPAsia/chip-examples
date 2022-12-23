@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   # root "articles#index"
 
   get '/', to: 'payment#index'
+  get '/cc_form', to: 'payment#cc_form'
   post '/payment', to: 'payment#create'
 
   post '/api/callback/payment-success', to: 'payment#callbackPaymentSuccess'

@@ -19,6 +19,22 @@
 
 ### Execute the following to run the app:
 
+1. Make sure to install all dependencies:
+   - Enter docker console:
+      ```
+      docker exec -it $(docker ps -q) bash
+      ```
+
+   - Run:
+      ```
+      yarn
+      ```
+
+   - Then:
+      ```
+      ./bin/rails tailwindcss:install
+      ```
+
 1. This app was built by referring to this [tutorial](https://github.com/docker/awesome-compose/tree/master/official-documentation-samples/rails).
 
 1. Start the app by running the following:

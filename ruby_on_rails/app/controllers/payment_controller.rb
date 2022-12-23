@@ -20,8 +20,16 @@ class PaymentController < ApplicationController
     @count = @orders.total_count
   end
 
+  def cc_form
+    if !flash[:direct_post_url].present?
+      redirect_to action: 'index'
+    end
+  end
+
   def create
-    record = Order.new permitted_params
+    record = Order.new
+    record.customer_email = permitted_params[:customer_email]
+    record.product_name = permitted_params[:product_name]
     record.product_price = permitted_params[:product_price].to_f * 100
 
     if record.save
@@ -60,6 +68,12 @@ class PaymentController < ApplicationController
     record.txn_id = result["id"]
     record.save
 
+    if permitted_params[:is_direct_post] && result['direct_post_url'].present?
+      flash[:direct_post_url] = result['direct_post_url']
+      redirect_to action: 'cc_form'
+      return
+    end
+
     redirect_to result["checkout_url"], allow_other_host: true
   end
 
@@ -82,7 +96,7 @@ class PaymentController < ApplicationController
   private
 
   def permitted_params
-    params.permit(:product_name, :product_price, :customer_email)
+    params.permit(:product_name, :product_price, :customer_email, :is_direct_post)
   end
   
   def signature_header_exist
