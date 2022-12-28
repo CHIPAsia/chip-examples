@@ -63,7 +63,15 @@
             action="/payment"
             class="flex flex-col space-y-4 p-4 sm:p-8"
           >
-            <h3 class="text-2xl font-bold">Order Form</h3>
+            <div class="flex flex-row justify-between items-center">
+              <h3 class="text-2xl font-bold">Order Form</h3>
+              <div class="form-control">
+                <label class="label cursor-pointer gap-4">
+                  <span class="label-text">Pay using Direct Post CC:</span>
+                  <input type="checkbox" value="true" checked name="is_direct_post" class="toggle" id="is_direct_post" />
+                </label>
+              </div>
+            </div>
             <div class="form-control w-full">
               <label class="label">
                 <span class="label-text">Product Name</span>
