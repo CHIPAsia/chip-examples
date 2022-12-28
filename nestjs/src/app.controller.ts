@@ -9,6 +9,7 @@ import {
   Query,
   HttpException,
   RawBodyRequest,
+  Session,
 } from "@nestjs/common";
 import { PRODUCTS } from "../constants/index";
 import { Request, Response } from "express";
@@ -50,8 +51,25 @@ export class AppController {
     };
   }
 
+  @Get("/cc_form")
+  @Render("cc_form")
+  async cc_form(@Query() query, @Res() res: Response, @Session() session: Record<string, any>): Promise<any> {
+    // get & delete session direct post url
+    const direct_post_url = session.direct_post_url
+    // if session not exist
+    if (direct_post_url === undefined) {
+      res.redirect('/')
+    }
+    
+    session.destroy()
+    // else
+    return {
+      direct_post_url: direct_post_url
+    }
+  }
+
   @Post("/payment")
-  async payment(@Req() req: Request, @Res() res: Response) {
+  async payment(@Req() req: Request, @Res() res: Response, @Session() session: Record<string, any>) {
     const inputs = req.body;
 
     const price_in_cent = parseFloat(inputs["product_price"]) * 100;
@@ -68,19 +86,6 @@ export class AppController {
     Chip.ApiClient.instance.token = process.env.CHIP_API_KEY;
     const apiInstance = new Chip.PaymentApi();
 
-    let apiCallback = async (error, data, response) => {
-      if (error) {
-        console.log("API call failed. Error:");
-        console.error(error);
-        res.redirect("http://localhost:3000?status=fail");
-      } else {
-        // extract & save transaction id from checkout_url
-        await this.orderService.updateOrderTxnId(order.id, data.id);
-        // redirect to payment gateway
-        res.redirect(data.checkout_url);
-      }
-    };
-
     const client = new Chip.ClientDetails(order.customer_email);
     const product = new Chip.Product(order.product_name, order.product_price);
     const details = new Chip.PurchaseDetails([product]);
@@ -91,7 +96,28 @@ export class AppController {
     purchase.brand_id = process.env.CHIP_BRAND_ID;
     purchase.client = client;
     purchase.purchase = details;
-    apiInstance.purchasesCreate(purchase, apiCallback);
+
+    apiInstance.purchasesCreate(purchase, async (error, data, response) => {
+      if (error) {
+        console.log("API call failed. Error:");
+        console.error(error);
+        res.redirect("http://localhost:3000?status=fail");
+      } else {
+
+        if (inputs?.is_direct_post !== undefined && inputs.is_direct_post === 'true') {
+          // set session to store direct post url
+          session.direct_post_url = data.direct_post_url
+
+          // redirect to cc_form
+          res.redirect('/cc_form')
+        } else {
+          // extract & save transaction id from checkout_url
+          await this.orderService.updateOrderTxnId(order.id, data.id);
+          // redirect to payment gateway
+          res.redirect(data.checkout_url);
+        }
+      }
+    });
   }
 }
 
@@ -106,7 +132,6 @@ export class CallbackController {
   ) {
     let signature: string;
     let content: any;
-    let pub_key: string;
 
     const apiInstance = new Chip.PaymentApi();
 
@@ -125,11 +150,11 @@ export class CallbackController {
         },
       }
     ).then((res) => res.json());
-    pub_key = await fetcher.toString();
-
+    const pub_key = await fetcher.toString();
+    
     const is_verified = apiInstance.verify(
       content,
-      Buffer.from(signature, "base64"),
+      Buffer.from(signature, "base64").toString(),
       pub_key
     );
 
@@ -166,7 +191,7 @@ export class WebhookController {
 
     const is_verified = apiInstance.verify(
       content,
-      Buffer.from(signature, "base64"),
+      Buffer.from(signature, "base64").toString(),
       pub_key
     );
 
