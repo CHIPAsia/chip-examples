@@ -17,11 +17,11 @@ Integrate CHIP with your Minisite written with HTML + PHP.
 
 - Navigate to **src** directory.
 - Edit **configuration.php** file and set:
-  1. **SECRET_KEY**.
-  1. **BRAND_ID**.
-  1. **SITE_URL**.
-  1. **SUCCESS_REDIRECT**.
-  1. **FAILURE_REDIRECT**.
+  1. **SECRET_KEY**
+  1. **BRAND_ID**
+  1. **SITE_URL**
+  1. **SUCCESS_REDIRECT**
+  1. **FAILURE_REDIRECT**
 
 ## How to use
 

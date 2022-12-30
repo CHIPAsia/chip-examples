@@ -10,6 +10,7 @@ $params = array(
   'cancel_redirect'  => FAILURE_REDIRECT,
   'send_receipt'     => true,
   'creator_agent'    => 'Minisite',
+  'brand_id'         => BRAND_ID,
   // 'reference'        => 'Reference',
 
   'purchase' =>  array(
