@@ -61,21 +61,8 @@
    ...
     "repositories": [
       {
-          "type": "package",
-          "package": {
-              "name": "chip/chip-sdk-php",
-              "version": "v1.0.0",
-              "source": {
-                  "url": "git@github.com:CHIPAsia/chip-php-sdk.git",
-                  "type": "git",
-                  "reference": "v1.0.0"
-              },
-              "autoload": {
-                  "classmap": [
-                      "lib/"
-                  ]
-              }
-          }
+          "type": "vcs",
+          "url": "git@github.com:CHIPAsia/chip-php-sdk.git"
       }
     ],
    ...
