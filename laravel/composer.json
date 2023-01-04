@@ -8,25 +8,26 @@
     ],
     "license": "MIT",
     "repositories": [
-        {
-            "type": "package",
-            "package": {
-                "name": "chip/chip-sdk-php",
-                "version": "1.0",
-                "dist": {
-                    "url": "https://gate.chip-in.asia/api_sdks/php/",
-                    "type": "zip"
-                },
-                "autoload": {
-                    "classmap": [
-                        "lib/"
-                    ]
-                }
-            }
-        }
+      {
+          "type": "package",
+          "package": {
+              "name": "chip/chip-sdk-php",
+              "version": "v1.0.0",
+              "source": {
+                  "url": "git@github.com:CHIPAsia/chip-php-sdk.git",
+                  "type": "git",
+                  "reference": "v1.0.0"
+              },
+              "autoload": {
+                  "classmap": [
+                      "lib/"
+                  ]
+              }
+          }
+      }
     ],
     "require": {
-        "php": "^8.0.2",
+        "php": ">=7.2.0",
         "chip/chip-sdk-php": "^1.0",
         "doctrine/dbal": "^3.5",
         "guzzlehttp/guzzle": "^7.2",
