@@ -32,7 +32,14 @@ Route::post('/callback/payment-success', function (Request $request) {
     ])->get("https://gate.chip-in.asia/api/v1/public_key/");
     $response_body = strval($response->body());
 
-    $pub_key = str_replace('\n',"\n",$response_body);
+    $response_arr = explode('\n', $response_body, -1);
+    array_shift($response_arr);
+    array_pop($response_arr);
+    $response_arr_flat = "";
+    foreach ($response_arr as $string) {
+        $response_arr_flat .= $string . "\n";
+    }
+    $pub_key = "-----BEGIN PUBLIC KEY-----\n" . $response_arr_flat . "-----END PUBLIC KEY-----\n";
 
     $is_verified = \Chip\ChipApi::verify($content, $signature, $pub_key);
 
