@@ -33,7 +33,7 @@ curl_setopt($process, CURLOPT_HEADER , 0);
 curl_setopt($process, CURLOPT_HTTPHEADER, array('Content-Type: application/json' , "Authorization: Bearer $secret_key" ));
 curl_setopt($process, CURLOPT_TIMEOUT, 30);
 curl_setopt($process, CURLOPT_RETURNTRANSFER, 1);
-curl_setopt($process, CURLOPT_POSTFIELDS, json_encode($params) ); 
+curl_setopt($process, CURLOPT_POSTFIELDS, json_encode($params) );
 
 $return = curl_exec($process);
 curl_close($process);
